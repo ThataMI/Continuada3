@@ -83,27 +83,24 @@ public class ProdutoController {
 
 
     @PostMapping("/arquivo")
-    public ResponseEntity arquivo(@RequestParam("arquivo") MultipartFile arquivo) throws IOException {
+    public ResponseEntity enviar(@RequestParam("arquivo") MultipartFile arquivo) throws IOException {
 
-        // importando o arquivo de texto
 
         if (arquivo.isEmpty()) {
             return ResponseEntity.badRequest().body("Arquivo não enviado!");
         }
 
-        // obtendo o tipo do arquivo
         System.out.println("Recebendo um arquivo do tipo: " + arquivo.getContentType());
 
-        // obtendo o conteúdo do arquivo
         byte[] conteudo = arquivo.getBytes();
 
 
         Path path = Paths.get(arquivo.getOriginalFilename());
         Files.write(path, conteudo);
 
-        String nomeArq = "produto.txt";
+        String nomeDoArquivo = "produto.txt";
 
-        List<Produto>produtos =  GravarArquivo.gravarArquivo(nomeArq);
+        List<Produto>produtos =  GravarArquivo.gravarArquivo(nomeDoArquivo);
 
         for (Produto p : produtos){
 
